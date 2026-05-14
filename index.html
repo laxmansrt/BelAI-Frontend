@@ -1555,7 +1555,7 @@
 <body>
   <script>
     const GROQ_KEY = "";
-    const API_BASE = "https://bel-ai-bknd.vercel.app/api";
+    const API_BASE = "https://bel-ai-backend.vercel.app/api";
     // const API_BASE = "http://localhost:4001/api"; // Local testing
     // Shared config bridge for belai-features.js (external scripts can't access inline let/const)
     window.BELAI = {
@@ -1578,7 +1578,7 @@
       var isJioPhone = /JioPhone|Jio/i.test(ua);
       // Redirect KaiOS/JioPhone to backend's server-rendered lite pages (zero JS required)
       if ((isKaiOS || isJioPhone || isOldGecko) && window.location.pathname.indexOf('lite') === -1) {
-        window.location.href = 'https://bel-ai-bknd.vercel.app/lite';
+        window.location.href = 'https://bel-ai-backend.vercel.app/lite';
         return;
       }
       var noSpeech  = !('SpeechRecognition' in window) && !('webkitSpeechRecognition' in window);
