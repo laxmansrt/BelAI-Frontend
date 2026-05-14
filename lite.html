@@ -1,0 +1,527 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.2//EN" "http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="HandheldFriendly" content="true" />
+  <meta name="MobileOptimized" content="240" />
+  <title>BELAI - Farmer AI</title>
+  <style type="text/css">
+    body {
+      background: #0a1a0c;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      margin: 0;
+      padding: 6px;
+    }
+    h1 {
+      font-size: 18px;
+      color: #f5c842;
+      text-align: center;
+      margin: 6px 0 2px 0;
+      border-bottom: 1px solid #2a4a2c;
+      padding-bottom: 6px;
+    }
+    h2 {
+      font-size: 15px;
+      color: #f5c842;
+      margin: 8px 0 4px 0;
+    }
+    h3 {
+      font-size: 13px;
+      color: #a3e635;
+      margin: 6px 0 3px 0;
+    }
+    .sub {
+      font-size: 11px;
+      color: #88aa88;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    a {
+      color: #f5c842;
+      text-decoration: none;
+    }
+    a:visited { color: #d4a800; }
+
+    /* Nav menu */
+    .menu {
+      background: #1a2e1c;
+      border: 1px solid #2a4a2c;
+      padding: 8px;
+      margin-bottom: 10px;
+    }
+    .menu-item {
+      display: block;
+      padding: 10px 8px;
+      border-bottom: 1px solid #2a4a2c;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .menu-item:last-child { border-bottom: none; }
+    .menu-item .arrow { color: #f5c842; float: right; }
+
+    /* Forms */
+    form { margin: 0; padding: 0; }
+    textarea, input[type="text"], select {
+      width: 100%;
+      background: #1a2e1c;
+      border: 1px solid #3a6a3c;
+      color: #ffffff;
+      font-size: 13px;
+      padding: 8px;
+      margin-bottom: 8px;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    .btn {
+      background: #1a5e1c;
+      border: 2px solid #f5c842;
+      color: #f5c842;
+      font-size: 14px;
+      font-weight: bold;
+      padding: 10px;
+      width: 100%;
+      cursor: pointer;
+      font-family: Arial, sans-serif;
+    }
+    label {
+      display: block;
+      color: #88cc88;
+      font-size: 12px;
+      margin-bottom: 3px;
+    }
+
+    /* Answer box */
+    .answer {
+      background: #0f2a10;
+      border: 1px solid #3a6a3c;
+      border-left: 3px solid #f5c842;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .you-said {
+      background: #1a1a00;
+      border: 1px solid #4a4a00;
+      padding: 8px;
+      margin-bottom: 8px;
+      font-size: 12px;
+      color: #cccc88;
+    }
+
+    /* Price table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+    th {
+      background: #1a3e1c;
+      color: #f5c842;
+      padding: 6px 4px;
+      text-align: left;
+      border-bottom: 1px solid #3a6a3c;
+      font-size: 11px;
+    }
+    td {
+      padding: 7px 4px;
+      border-bottom: 1px solid #1a3a1c;
+      vertical-align: top;
+    }
+    tr:nth-child(even) td { background: #0f1f10; }
+    .up { color: #22c55e; font-weight: bold; }
+    .down { color: #ef4444; font-weight: bold; }
+
+    /* Info cards */
+    .card {
+      background: #1a2e1c;
+      border: 1px solid #2a4a2c;
+      padding: 8px;
+      margin-bottom: 8px;
+    }
+    .badge {
+      background: #22c55e;
+      color: #000;
+      font-size: 10px;
+      font-weight: bold;
+      padding: 1px 5px;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      font-size: 11px;
+      color: #446644;
+      margin-top: 14px;
+      padding-top: 8px;
+      border-top: 1px solid #1a3a1c;
+    }
+    .back-link {
+      display: block;
+      background: #1a2e1c;
+      border: 1px solid #2a4a2c;
+      color: #f5c842;
+      text-align: center;
+      padding: 8px;
+      margin-bottom: 10px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .tip-link {
+      display: inline-block;
+      background: #1a3e1c;
+      border: 1px solid #2a5a2c;
+      color: #a3e635;
+      font-size: 11px;
+      padding: 4px 8px;
+      margin: 3px 2px 3px 0;
+      cursor: pointer;
+    }
+    .separator {
+      border: none;
+      border-top: 1px solid #1a3a1c;
+      margin: 10px 0;
+    }
+    .green { color: #22c55e; }
+    .gold-text { color: #f5c842; }
+    .err { color: #ef4444; font-size: 12px; }
+    .scheme {
+      background: #0f1a0f;
+      border-left: 2px solid #22c55e;
+      padding: 6px 8px;
+      margin-bottom: 8px;
+      font-size: 12px;
+    }
+    .hidden { display: none; }
+    .loading { color: #f5c842; font-size: 13px; text-align: center; padding: 16px; }
+  </style>
+</head>
+<body>
+
+  <h1>&#127807; BELAI</h1>
+  <p class="sub">Farmer AI Assistant | Lite Mode</p>
+
+  <!-- ═══ HOME MENU ═══ -->
+  <div id="page-home">
+    <div class="menu">
+      <a class="menu-item" href="javascript:showPage('ask')">
+        &#129302; Ask AI (Any Question)
+        <span class="arrow">&#9658;</span>
+      </a>
+      <a class="menu-item" href="javascript:showPage('prices')">
+        &#128200; Mandi Prices Today
+        <span class="arrow">&#9658;</span>
+      </a>
+      <a class="menu-item" href="javascript:showPage('planner')">
+        &#127807; Crop Planner
+        <span class="arrow">&#9658;</span>
+      </a>
+      <a class="menu-item" href="javascript:showPage('schemes')">
+        &#127963; Govt Schemes (PM-Kisan)
+        <span class="arrow">&#9658;</span>
+      </a>
+      <a class="menu-item" href="javascript:showPage('tips')">
+        &#9889; Quick Farming Tips
+        <span class="arrow">&#9658;</span>
+      </a>
+    </div>
+
+    <div class="card">
+      <b class="gold-text">&#128241; Using JioPhone?</b><br/>
+      This lite page works on all phones. No apps needed.<br/>
+      Type your farming question and get instant AI advice.
+    </div>
+
+    <div class="card">
+      <b>PM-Kisan:</b> Rs.6000/year &bull;
+      <b>Fasal Bima:</b> Crop insurance &bull;
+      <b>eNAM:</b> Online mandi
+    </div>
+  </div>
+
+  <!-- ═══ ASK AI PAGE ═══ -->
+  <div id="page-ask" class="hidden">
+    <a class="back-link" href="javascript:showPage('home')">&#9664; Back to Menu</a>
+    <h2>&#129302; Ask AI Anything</h2>
+    <p style="font-size:12px; color:#88aa88; margin-bottom:8px;">Ask about crops, weather, diseases, prices, schemes...</p>
+
+    <label>Your Question:</label>
+    <textarea id="askInput" rows="3" style="resize:none;" placeholder="e.g. How to protect tomato from blight?"></textarea>
+
+    <label>Language:</label>
+    <select id="askLang">
+      <option value="en">English</option>
+      <option value="kn">Kannada</option>
+      <option value="hi">Hindi</option>
+      <option value="ta">Tamil</option>
+      <option value="te">Telugu</option>
+    </select>
+
+    <a class="btn" href="javascript:askAI()" style="display:block;text-align:center;">Ask BELAI &#9658;</a>
+
+    <div id="askResult" class="hidden"></div>
+  </div>
+
+  <!-- ═══ MANDI PRICES PAGE ═══ -->
+  <div id="page-prices" class="hidden">
+    <a class="back-link" href="javascript:showPage('home')">&#9664; Back to Menu</a>
+    <h2>&#128200; Mandi Prices Today</h2>
+    <p style="font-size:12px; color:#88aa88; margin-bottom:8px;">Latest market rates (indicative)</p>
+
+    <table>
+      <tr><th>Crop</th><th>Price/Qtl</th><th>Trend</th></tr>
+      <tr><td>Rice (Paddy)</td><td>&#8377;2,180</td><td class="up">&#9650; +2.1%</td></tr>
+      <tr><td>Wheat</td><td>&#8377;2,350</td><td class="up">&#9650; +1.5%</td></tr>
+      <tr><td>Ragi</td><td>&#8377;3,846</td><td class="up">&#9650; +0.8%</td></tr>
+      <tr><td>Jowar</td><td>&#8377;3,180</td><td class="down">&#9660; -0.5%</td></tr>
+      <tr><td>Tomato</td><td>&#8377;1,800</td><td class="down">&#9660; -3.2%</td></tr>
+      <tr><td>Onion</td><td>&#8377;1,400</td><td class="up">&#9650; +4.1%</td></tr>
+      <tr><td>Potato</td><td>&#8377;1,200</td><td class="up">&#9650; +1.2%</td></tr>
+      <tr><td>Maize</td><td>&#8377;2,090</td><td class="up">&#9650; +0.9%</td></tr>
+      <tr><td>Groundnut</td><td>&#8377;5,550</td><td class="up">&#9650; +1.8%</td></tr>
+      <tr><td>Sugarcane</td><td>&#8377;315</td><td class="up">&#9650; +0.3%</td></tr>
+    </table>
+
+    <div class="card">
+      <b class="gold-text">&#128161; Tip:</b> Sell when prices are <span class="up">green</span>. Store if <span class="down">falling</span>.
+    </div>
+  </div>
+
+  <!-- ═══ CROP PLANNER PAGE ═══ -->
+  <div id="page-planner" class="hidden">
+    <a class="back-link" href="javascript:showPage('home')">&#9664; Back to Menu</a>
+    <h2>&#127807; AI Crop Planner</h2>
+
+    <label>Your Location / District:</label>
+    <input type="text" id="plannerLoc" placeholder="e.g. Tumkur, Karnataka" />
+
+    <label>Soil Type:</label>
+    <select id="plannerSoil">
+      <option value="red">Red Soil</option>
+      <option value="black">Black Soil</option>
+      <option value="alluvial">Alluvial</option>
+      <option value="laterite">Laterite</option>
+      <option value="sandy">Sandy</option>
+      <option value="clay">Clay</option>
+    </select>
+
+    <label>Season:</label>
+    <select id="plannerSeason">
+      <option value="kharif">Kharif (Jun-Oct)</option>
+      <option value="rabi">Rabi (Nov-Mar)</option>
+      <option value="zaid">Zaid (Mar-Jun)</option>
+    </select>
+
+    <label>Farm Size (acres):</label>
+    <input type="text" id="plannerSize" placeholder="e.g. 2" />
+
+    <a class="btn" href="javascript:planCrop()" style="display:block;text-align:center;">Get AI Recommendation &#9658;</a>
+
+    <div id="plannerResult" class="hidden"></div>
+  </div>
+
+  <!-- ═══ GOVT SCHEMES PAGE ═══ -->
+  <div id="page-schemes" class="hidden">
+    <a class="back-link" href="javascript:showPage('home')">&#9664; Back to Menu</a>
+    <h2>&#127963; Government Schemes</h2>
+
+    <div class="scheme">
+      <b class="gold-text">PM-Kisan Samman Nidhi</b><br/>
+      &#8377;6,000/year in 3 installments<br/>
+      <span style="color:#88cc88;">Status: Active | Apply at pmkisan.gov.in</span>
+    </div>
+
+    <div class="scheme">
+      <b class="gold-text">PM Fasal Bima Yojana</b><br/>
+      Crop insurance at 1.5-2% premium<br/>
+      <span style="color:#88cc88;">Covers: Natural calamities, pest attacks</span>
+    </div>
+
+    <div class="scheme">
+      <b class="gold-text">Kisan Credit Card (KCC)</b><br/>
+      Crop loan at 4% interest (with subsidy)<br/>
+      <span style="color:#88cc88;">Apply at: Any bank branch</span>
+    </div>
+
+    <div class="scheme">
+      <b class="gold-text">eNAM (National Agri Market)</b><br/>
+      Sell crops online to any mandi in India<br/>
+      <span style="color:#88cc88;">Register at: enam.gov.in</span>
+    </div>
+
+    <div class="scheme">
+      <b class="gold-text">Soil Health Card Scheme</b><br/>
+      Free soil testing &amp; nutrient recommendations<br/>
+      <span style="color:#88cc88;">Visit: Nearest Krishi Vigyan Kendra</span>
+    </div>
+
+    <div class="scheme">
+      <b class="gold-text">PM Krishi Sinchai Yojana</b><br/>
+      Subsidy on drip &amp; sprinkler irrigation<br/>
+      <span style="color:#88cc88;">Up to 55% subsidy for small farmers</span>
+    </div>
+  </div>
+
+  <!-- ═══ FARMING TIPS PAGE ═══ -->
+  <div id="page-tips" class="hidden">
+    <a class="back-link" href="javascript:showPage('home')">&#9664; Back to Menu</a>
+    <h2>&#9889; Quick Farming Tips</h2>
+
+    <div class="card">
+      <h3>&#127793; Soil Health</h3>
+      &#8226; Test soil every 2 years at KVK<br/>
+      &#8226; Add organic compost (FYM) before planting<br/>
+      &#8226; Rotate crops: legume after cereal<br/>
+      &#8226; Maintain soil pH between 6.0-7.5
+    </div>
+
+    <div class="card">
+      <h3>&#128167; Water Management</h3>
+      &#8226; Use drip irrigation - saves 40% water<br/>
+      &#8226; Mulch with straw to reduce evaporation<br/>
+      &#8226; Water early morning or late evening<br/>
+      &#8226; Collect rainwater in farm ponds
+    </div>
+
+    <div class="card">
+      <h3>&#128027; Pest Control (Organic)</h3>
+      &#8226; Neem oil spray for aphids &amp; whiteflies<br/>
+      &#8226; Marigold border to repel nematodes<br/>
+      &#8226; Pheromone traps for fruit borers<br/>
+      &#8226; Jeevamrutham for soil health
+    </div>
+
+    <div class="card">
+      <h3>&#127806; Harvest Tips</h3>
+      &#8226; Harvest at right moisture (14% for grains)<br/>
+      &#8226; Dry crops on tarpaulin, not road<br/>
+      &#8226; Store in hermetic bags to prevent pests<br/>
+      &#8226; Check mandi prices before selling
+    </div>
+
+    <div class="card">
+      <h3>&#128178; Money-Saving Tips</h3>
+      &#8226; Buy seeds from govt outlets (cheaper)<br/>
+      &#8226; Use Soil Health Card to avoid excess fertilizer<br/>
+      &#8226; Form FPO group for better prices<br/>
+      &#8226; Apply for KCC loan at 4% interest
+    </div>
+  </div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <div class="footer">
+    BELAI - AI for Indian Farmers | belai.vercel.app<br/>
+    Works on all phones - JioPhone, Karbon, Nokia
+  </div>
+
+  <!-- ═══ JAVASCRIPT (ES3 compatible for KaiOS) ═══ -->
+  <script type="text/javascript">
+    var API_BASE = "https://bel-ai-bknd.vercel.app/api";
+    var pages = ['home', 'ask', 'prices', 'planner', 'schemes', 'tips'];
+
+    function showPage(name) {
+      for (var i = 0; i < pages.length; i++) {
+        var el = document.getElementById('page-' + pages[i]);
+        if (el) el.className = (pages[i] === name) ? '' : 'hidden';
+      }
+      window.scrollTo(0, 0);
+    }
+
+    function askAI() {
+      var q = document.getElementById('askInput').value;
+      var lang = document.getElementById('askLang').value;
+      var box = document.getElementById('askResult');
+      if (!q) { box.innerHTML = '<p class="err">Please type a question</p>'; box.className = ''; return; }
+
+      box.innerHTML = '<div class="loading">&#9203; Asking BELAI... please wait</div>';
+      box.className = '';
+
+      var langMap = { en: 'English', kn: 'Kannada', hi: 'Hindi', ta: 'Tamil', te: 'Telugu' };
+      var prompt = "Answer this farming question in " + (langMap[lang] || 'English') + ". Keep it simple and practical for a small Indian farmer: " + q;
+
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', API_BASE + '/bot', true);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            try {
+              var data = JSON.parse(xhr.responseText);
+              var reply = data.reply || data.response || data.answer || 'No response received';
+              reply = reply.replace(/\n/g, '<br/>');
+              box.innerHTML = '<div class="you-said">You asked: ' + q + '</div>' +
+                '<div class="answer">' + reply + '</div>';
+            } catch(e) {
+              box.innerHTML = '<div class="answer">Response received but could not parse. Try again.</div>';
+            }
+          } else {
+            box.innerHTML = '<div class="err">&#10060; Could not connect. Check your internet and try again.</div>';
+          }
+        }
+      };
+      xhr.onerror = function() {
+        box.innerHTML = '<div class="err">&#10060; Network error. Check internet connection.</div>';
+      };
+      try {
+        xhr.send(JSON.stringify({ message: prompt, language: lang }));
+      } catch(e) {
+        box.innerHTML = '<div class="err">&#10060; Failed to send. Try again.</div>';
+      }
+    }
+
+    function planCrop() {
+      var loc = document.getElementById('plannerLoc').value;
+      var soil = document.getElementById('plannerSoil').value;
+      var season = document.getElementById('plannerSeason').value;
+      var size = document.getElementById('plannerSize').value;
+      var box = document.getElementById('plannerResult');
+
+      if (!loc) { box.innerHTML = '<p class="err">Please enter your location</p>'; box.className = ''; return; }
+
+      box.innerHTML = '<div class="loading">&#9203; Getting crop plan... please wait</div>';
+      box.className = '';
+
+      var prompt = "Suggest best crops for: Location=" + loc + ", Soil=" + soil +
+        ", Season=" + season + ", Farm size=" + (size || '1') + " acres. " +
+        "Give 3-4 crop names with expected yield, cost, and profit per acre. Keep it simple for Indian farmer.";
+
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', API_BASE + '/bot', true);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            try {
+              var data = JSON.parse(xhr.responseText);
+              var reply = data.reply || data.response || data.answer || 'No response received';
+              reply = reply.replace(/\n/g, '<br/>');
+              box.innerHTML = '<div class="answer"><b class="gold-text">&#127807; AI Crop Plan:</b><br/><br/>' + reply + '</div>';
+            } catch(e) {
+              box.innerHTML = '<div class="answer">Response received but could not parse.</div>';
+            }
+          } else {
+            box.innerHTML = '<div class="err">&#10060; Could not connect. Try again.</div>';
+          }
+        }
+      };
+      xhr.onerror = function() {
+        box.innerHTML = '<div class="err">&#10060; Network error. Check internet.</div>';
+      };
+      try {
+        xhr.send(JSON.stringify({ message: prompt, language: 'en' }));
+      } catch(e) {
+        box.innerHTML = '<div class="err">&#10060; Failed to send. Try again.</div>';
+      }
+    }
+  </script>
+
+</body>
+</html>
+
