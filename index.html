@@ -4790,7 +4790,8 @@
         showToast("Enter name and phone");
         return;
       }
-      MY_BOOKINGS.push({
+      
+      const bookingData = {
         eq: BKG_EQ.name,
         days: BKG_DAYS,
         total: BKG_EQ.price * BKG_DAYS,
@@ -4798,7 +4799,17 @@
         phone,
         status: "Confirmed",
         id: "BK" + Date.now().toString().slice(-4),
-      });
+      };
+      
+      MY_BOOKINGS.push(bookingData);
+      
+      // Save to database
+      fetch(API_BASE + "/bookings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(bookingData)
+      }).catch(err => console.error("Booking save error:", err));
+
       document.getElementById("bookingModal").style.display = "none";
       showToast("Booking confirmed! ✓ Check My Bookings");
     }
@@ -4822,6 +4833,14 @@
         showToast("Fill name and price");
         return;
       }
+      
+      // Save to database
+      fetch(API_BASE + "/listings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: n, price: p, active: true })
+      }).catch(err => console.error("Listing save error:", err));
+      
       showToast("Equipment listed ✓");
       document.getElementById("eqName").value = "";
       document.getElementById("eqPrice").value = "";
