@@ -4696,7 +4696,7 @@
           (e) => `
     <div class="glass-sm eq-card" style="overflow:hidden; position:relative;">
       <div style="position:relative">
-        <img class="eq-img" src="${e.img.startsWith('http') ? e.img : `https://images.unsplash.com/photo-${e.img}?w=400&q=80&fit=crop`}" alt="${e.name}" loading="lazy">
+        <img class="eq-img" src="${e.img.includes('//') || e.img.startsWith('data:') ? e.img : `https://images.unsplash.com/photo-${e.img}?w=400&q=80&fit=crop`}" alt="${e.name}" loading="lazy">
         <button onclick="editEqImage(${e.id})" style="position:absolute; top:8px; right:8px; background:rgba(0,0,0,0.6); color:white; border:none; border-radius:50%; width:32px; height:32px; cursor:pointer; font-size:14px; backdrop-filter:blur(4px); box-shadow:0 2px 5px rgba(0,0,0,0.3)" title="Edit Photo">✏️</button>
       </div>
       <div class="eq-body">
