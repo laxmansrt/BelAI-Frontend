@@ -4676,12 +4676,23 @@
     function editEqImage(id) {
       const eq = EQ_DB.find((e) => e.id === id);
       if (!eq) return;
-      const newUrl = prompt("Enter new image URL for " + eq.name + ":", eq.img);
-      if (newUrl && newUrl.trim() !== "") {
-        eq.img = newUrl.trim();
-        renderEqGrid(EQ_CAT);
-        showToast("✅ Photo updated successfully!");
-      }
+      
+      const fileInput = document.createElement('input');
+      fileInput.type = 'file';
+      fileInput.accept = 'image/png, image/jpeg, image/webp';
+      fileInput.onchange = (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+        
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          eq.img = e.target.result;
+          renderEqGrid(EQ_CAT);
+          showToast("✅ Photo updated successfully!");
+        };
+        reader.readAsDataURL(file);
+      };
+      fileInput.click();
     }
 
     function renderEqGrid(cat) {
