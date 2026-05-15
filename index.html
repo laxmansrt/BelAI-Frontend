@@ -4726,27 +4726,55 @@
     function openBooking(id) {
       BKG_EQ = EQ_DB.find((e) => e.id === id);
       if (!BKG_EQ) return;
+      BKG_DAYS = 1; // reset days
       const m = document.getElementById("bookingModal");
       m.style.display = "flex";
       renderBkgModal();
     }
+    
+    function updateBkgDays(delta) {
+      if (!BKG_EQ) return;
+      BKG_DAYS = Math.max(1, Math.min(30, BKG_DAYS + delta));
+      const total = BKG_EQ.price * BKG_DAYS;
+      const advance = Math.round(total * 0.3);
+      
+      const daysEl = document.querySelector('.bkg-days');
+      if (daysEl) daysEl.textContent = BKG_DAYS + ' day' + (BKG_DAYS > 1 ? 's' : '');
+      
+      const totalEl = document.getElementById('totalCost');
+      if (totalEl) totalEl.innerHTML = '₹' + total + ' <span style="font-size:14px;opacity:0.7">(' + BKG_DAYS + (BKG_DAYS > 1 ? ' days' : ' day') + ')</span>';
+      
+      const advanceEl = document.getElementById('advanceCost');
+      if (advanceEl) advanceEl.innerHTML = '₹' + advance + ' <span style="font-size:12px;opacity:0.8">(30%)</span>';
+    }
+
     function renderBkgModal() {
       const m = document.getElementById("bookContent");
       if (!m || !BKG_EQ) return;
+      
+      const total = BKG_EQ.price * BKG_DAYS;
+      const advance = Math.round(total * 0.3);
+
       m.innerHTML = `
     <div style="font-size:18px;font-weight:700;margin-bottom:4px">${BKG_EQ.name}</div>
     <div style="font-size:13px;color:var(--white75);margin-bottom:20px">${BKG_EQ.owner} · ${BKG_EQ.dist}</div>
     <div class="glass-sm" style="padding:14px;margin-bottom:16px">
       <div style="font-size:12px;color:var(--gold);margin-bottom:10px">SELECT DURATION</div>
       <div style="display:flex;align-items:center;gap:16px;justify-content:center">
-        <button class="btn-outline" style="width:44px;height:44px;border-radius:50%;font-size:20px" onclick="BKG_DAYS=Math.max(1,BKG_DAYS-1);this.parentNode.querySelector('.bkg-days').textContent=BKG_DAYS+' day'+(BKG_DAYS>1?'s':'')">−</button>
-        <div style="text-align:center"><div class="bkg-days" style="font-size:28px;font-weight:800">${BKG_DAYS} day</div></div>
-        <button class="btn-outline" style="width:44px;height:44px;border-radius:50%;font-size:20px" onclick="BKG_DAYS=Math.min(30,BKG_DAYS+1);this.parentNode.querySelector('.bkg-days').textContent=BKG_DAYS+' day'+(BKG_DAYS>1?'s':'')">+</button>
+        <button class="btn-outline" style="width:44px;height:44px;border-radius:50%;font-size:20px" onclick="updateBkgDays(-1)">−</button>
+        <div style="text-align:center"><div class="bkg-days" style="font-size:28px;font-weight:800">${BKG_DAYS} day${BKG_DAYS>1?'s':''}</div></div>
+        <button class="btn-outline" style="width:44px;height:44px;border-radius:50%;font-size:20px" onclick="updateBkgDays(1)">+</button>
       </div>
     </div>
-    <div class="glass-sm" style="padding:14px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center">
-      <div style="font-size:14px;color:var(--white75)">Total Cost</div>
-      <div style="font-size:24px;font-weight:800;color:var(--gold)">₹${BKG_EQ.price} × ${BKG_DAYS} days</div>
+    <div class="glass-sm" style="padding:14px;margin-bottom:16px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div style="font-size:14px;color:var(--white75)">Total Cost</div>
+        <div id="totalCost" style="font-size:22px;font-weight:800;color:var(--gold)">₹${total} <span style="font-size:14px;opacity:0.7">(${BKG_DAYS} day${BKG_DAYS>1?'s':''})</span></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px solid rgba(255,255,255,0.1)">
+        <div style="font-size:13px;color:var(--white75)">Advance to Confirm</div>
+        <div id="advanceCost" style="font-size:16px;font-weight:700;color:#00e676">₹${advance} <span style="font-size:12px;opacity:0.8">(30%)</span></div>
+      </div>
     </div>
     <input class="glass-input" id="bkgName" placeholder="Your name" style="margin-bottom:10px">
     <input class="glass-input" id="bkgPhone" placeholder="Phone number" style="margin-bottom:16px">
