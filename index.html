@@ -2896,6 +2896,10 @@
       </div>
       <!-- Browse -->
       <div id="eq-browse">
+        <div class="glass-sm" style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; margin-bottom: 16px;">
+          <input id="eqSearchInput" class="glass-input" placeholder="Search equipment..." style="border-radius: 12px; padding: 8px 12px; flex: 1" oninput="searchEq(this.value)" />
+          <button onclick="voiceSearchEq()" style="background: none; border: none; font-size: 20px; cursor: pointer; flex-shrink: 0;" title="Voice Search">🎙️</button>
+        </div>
         <div class="h-scroll" style="margin-bottom: 16px" id="eqFilters">
           <div class="chip active" onclick="filterEq('All', this)">All</div>
           <div class="chip" onclick="filterEq('Tractors', this)">
@@ -4651,16 +4655,50 @@
       if (el) el.classList.add("active");
       renderEqGrid(cat);
     }
+    let EQ_SEARCH_QUERY = "";
+    function searchEq(q) {
+      EQ_SEARCH_QUERY = (q || "").toLowerCase();
+      renderEqGrid(EQ_CAT);
+    }
+    function voiceSearchEq() {
+      const Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!Rec) return showToast("Voice search not supported on this browser.");
+      const rec = new Rec();
+      rec.lang = "en-IN";
+      rec.onstart = () => showToast("🎙️ Listening...");
+      rec.onresult = (e) => {
+        let text = e.results[0][0].transcript;
+        document.getElementById("eqSearchInput").value = text;
+        searchEq(text);
+      };
+      rec.start();
+    }
+    function editEqImage(id) {
+      const eq = EQ_DB.find((e) => e.id === id);
+      if (!eq) return;
+      const newUrl = prompt("Enter new image URL for " + eq.name + ":", eq.img);
+      if (newUrl && newUrl.trim() !== "") {
+        eq.img = newUrl.trim();
+        renderEqGrid(EQ_CAT);
+        showToast("✅ Photo updated successfully!");
+      }
+    }
+
     function renderEqGrid(cat) {
       const g = document.getElementById("equipGrid");
       if (!g) return;
-      const items =
-        cat === "All" ? EQ_DB : EQ_DB.filter((e) => e.cat === cat);
+      let items = cat === "All" ? EQ_DB : EQ_DB.filter((e) => e.cat === cat);
+      if (EQ_SEARCH_QUERY) {
+        items = items.filter(e => e.name.toLowerCase().includes(EQ_SEARCH_QUERY) || e.cat.toLowerCase().includes(EQ_SEARCH_QUERY));
+      }
       g.innerHTML = items
         .map(
           (e) => `
-    <div class="glass-sm eq-card" style="overflow:hidden">
-      <img class="eq-img" src="${e.img.startsWith('http') ? e.img : `https://images.unsplash.com/photo-${e.img}?w=400&q=80&fit=crop`}" alt="${e.name}" loading="lazy">
+    <div class="glass-sm eq-card" style="overflow:hidden; position:relative;">
+      <div style="position:relative">
+        <img class="eq-img" src="${e.img.startsWith('http') ? e.img : `https://images.unsplash.com/photo-${e.img}?w=400&q=80&fit=crop`}" alt="${e.name}" loading="lazy">
+        <button onclick="editEqImage(${e.id})" style="position:absolute; top:8px; right:8px; background:rgba(0,0,0,0.6); color:white; border:none; border-radius:50%; width:32px; height:32px; cursor:pointer; font-size:14px; backdrop-filter:blur(4px); box-shadow:0 2px 5px rgba(0,0,0,0.3)" title="Edit Photo">✏️</button>
+      </div>
       <div class="eq-body">
         <div style="font-size:14px;font-weight:700;line-height:1.3">${e.name}</div>
         <div style="font-size:11px;color:var(--gold);margin-top:3px">${e.owner} · ${e.dist}</div>
